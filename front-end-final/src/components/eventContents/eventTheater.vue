@@ -1,0 +1,101 @@
+<template>
+  <div>
+    <!-- 상단 메뉴  -->
+    <NavBlack></NavBlack>
+
+    <div id="contents" class="contents_event_theater">
+      <div class="title_top ty2">
+        <h2 class="tit">영화</h2>
+        <div class="group_rgt">
+          <fieldset class="bx_search ty2">
+            <legend v-if="false">이벤트 검색하기</legend>
+            <input
+              type="text"
+              placeholder="검색어를 입력하세요."
+              title="검색어를 입력하세요"
+              value=""
+            /><button type="button" class="btn_col2 ty3">검색</button>
+          </fieldset>
+        </div>
+      </div>
+      <ul class="img_lst_wrap">
+        <li>
+          <a href="#none"
+            ><img
+              src="https://caching.lottecinema.co.kr//Media/Event/e3ce64ffb17e4d4090f5f022ff47c8e6.jpg"
+              alt="<장화신은 고양이> 현장 경품 이벤트 (키 체인)"
+            />
+            <div class="itm_date">2023.01.04 ~ 2023.01.10</div></a
+          >
+        </li>
+        <li>
+          <a href="#none"
+            ><img
+              src="https://caching.lottecinema.co.kr//Media/Event/af67679171274497872584fc4314fa5a.jpg"
+              alt="<패닉 런> 관람인증 이벤트"
+            />
+            <div class="itm_date">2023.01.04 ~ 2023.01.15</div></a
+          >
+        </li>
+        <li>
+          <a href="#none"
+            ><img
+              src="https://caching.lottecinema.co.kr//Media/Event/34a09c3e8144443991ac94f48170503a.jpg"
+              alt="<아바타: 물의 길> 리얼디 포스터 증정 이벤트"
+            />
+            <div class="itm_date">2022.12.28 ~ 2023.01.17</div></a
+          >
+        </li>
+        <li>
+          <a href="#none"
+            ><img
+              src="https://caching.lottecinema.co.kr//Media/Event/a5f963c664344797b69052e76e708d3b.jpg"
+              alt="<젠틀맨> 시그니처 아트카드 이벤트"
+            />
+            <div class="itm_date">2022.12.28 ~ 2023.01.24</div></a
+          >
+        </li>
+      </ul>
+      <button type="button" class="btn_txt_more"><span>더보기</span></button>
+    </div>
+  </div>
+</template>
+
+<script>
+import NavBlack from "@/components/common/NavBlack.vue";
+export default {
+    components: {
+    NavBlack,
+  },
+};
+</script>
+
+<style>
+.contents_event_theater .img_lst_wrap img {height:184px;}
+#contents.contents_event_theater > .title_top.ty2 {padding:0; margin-top:28px; margin-bottom:18px;}
+#contents.contents_event_theater .tbl_list {margin-top:20px;}
+#contents.contents_event_theater > .title_top.ty2 + .tab_wrap.outer {margin-top:32px;}
+#contents > .title_top {margin-bottom:20px; padding:25px 0 14px; border-bottom:1px solid #EEE;}
+#contents > .title_top:after {content:""; display:block; clear:both;}
+#contents > .title_top.ty2 {margin-bottom:10px; border-bottom:none;}
+#contents > .title_top .tit {float:left; font-size:24px; color:#000;}
+#contents > .title_top .group_rgt {float:right;}
+#contents > .title_top .group_rgt .list_lnk {margin-top:10px;}
+#contents > .title_top .group_rgt .bx_search {margin-top:-7px;}
+#contents > .title_top .group_rgt .bx_search.ty2 {margin-top:0;}
+.bx_search {display:inline-block; overflow:hidden; height:40px; padding:0 20px 0 10px; border-radius:41px; border:1px solid #707070; background-color:#FFF;}
+.bx_search input {width:240px; height:42px; margin-top:-1px; padding-left:10px; border:none; background-color:transparent;}
+.bx_search.ty2 {overflow:inherit; height:30px; border:0 none; border-radius:0; padding:0; -webkit-border-radius:0; -moz-border-radius:0; -ms-border-radius:0; -o-border-radius:0;}
+.bx_search.ty2 select {margin-right:9px; width:110px; height:29px; line-height:29px; font-size:13px;}
+.bx_search.ty2 input {border:1px solid #DDDDDD; width:175px; height:29px; line-height:29px; padding:0 18px; font-size:13px;}
+.bx_search.ty2 button {padding:0 30px; margin-left:9px;}
+.btn_col2 {display:inline-block; box-sizing:border-box; border-radius:4px; border:1px solid #414141; font-size:14px; color:#ffffff !important; text-align:center; vertical-align:middle; background-color:#414141;}
+.btn_col2.ty3{height:28px; line-height:26px; padding:0 14px;}
+.img_lst_wrap {margin-left:-19px;}
+.img_lst_wrap:after {content:''; display:block; clear:both;}
+.img_lst_wrap > li {float:left; position:relative; width:300px; height:210px; margin:0 0 55px 19px;}
+.img_lst_wrap > li > a {display:block; color: #000; height:150px; background:#f8f8f8; border-radius:4px ; -webkit-border-radius:4px ; -moz-border-radius:4px ; -ms-border-radius:4px ; -o-border-radius:4px ;}
+.img_lst_wrap > li > a > img {overflow:hidden; width:100%; border-radius:4px;}
+.img_lst_wrap > li .itm_tit {position:absolute; left:0; bottom:40px; padding-left:18px; font-size:15px; color:#FFF;}
+.img_lst_wrap > li .itm_date {position:absolute; left:0; bottom:0; padding-left:18px; font-family:'Roboto'; font-size:11px;}
+</style>

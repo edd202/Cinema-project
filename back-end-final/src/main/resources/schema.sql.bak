@@ -1,0 +1,349 @@
+-- TODO:항상 정리는 사전순으로 할 것!
+
+DROP SEQUENCE SQ_AUDIENCE;
+CREATE SEQUENCE SQ_AUDIENCE START WITH 1 INCREMENT BY 1;
+DROP SEQUENCE SQ_CINEMA_SITE;
+CREATE SEQUENCE SQ_CINEMA_SITE START WITH 1 INCREMENT BY 1;
+DROP SEQUENCE SQ_CRITICS;
+CREATE SEQUENCE SQ_CRITICS START WITH 1 INCREMENT BY 1;
+DROP SEQUENCE SQ_EVENT;
+CREATE SEQUENCE SQ_EVENT START WITH 1 INCREMENT BY 1;
+DROP SEQUENCE SQ_FAQ;
+CREATE SEQUENCE SQ_FAQ START WITH 1 INCREMENT BY 1;
+DROP SEQUENCE SQ_MEMBER;
+CREATE SEQUENCE SQ_MEMBER START WITH 1 INCREMENT BY 1;
+DROP SEQUENCE SQ_MEMBER_INFO;
+CREATE SEQUENCE SQ_MEMBER_INFO START WITH 1 INCREMENT BY 1;
+DROP SEQUENCE SQ_MOVIE;
+CREATE SEQUENCE SQ_MOVIE START WITH 1 INCREMENT BY 1;
+DROP SEQUENCE SQ_MOVIE_INFO;
+CREATE SEQUENCE SQ_MOVIE_INFO START WITH 1 INCREMENT BY 1;
+DROP SEQUENCE SQ_NON_MEMBER;
+CREATE SEQUENCE SQ_NON_MEMBER START WITH 1 INCREMENT BY 1;
+DROP SEQUENCE SQ_NOTICE;
+CREATE SEQUENCE SQ_NOTICE START WITH 1 INCREMENT BY 1;
+DROP SEQUENCE SQ_QNA;
+CREATE SEQUENCE SQ_QNA START WITH 1 INCREMENT BY 1;
+DROP SEQUENCE SQ_THEATER;
+CREATE SEQUENCE SQ_THEATER START WITH 1 INCREMENT BY 1;
+DROP SEQUENCE SQ_THEATER_FIRST;
+CREATE SEQUENCE SQ_THEATER_FIRST START WITH 1 INCREMENT BY 1;
+DROP SEQUENCE SQ_TICKET;
+CREATE SEQUENCE SQ_TICKET START WITH 1 INCREMENT BY 1;
+DROP SEQUENCE SQ_USER;
+CREATE SEQUENCE SQ_USER START WITH 1 INCREMENT BY 1;
+
+
+DROP TABLE TMP_AUDIENCE CASCADE CONSTRAINTS;
+DROP TABLE TMP_CINEMA_SITE CASCADE CONSTRAINTS;
+DROP TABLE TMP_CRITICS CASCADE CONSTRAINTS;
+DROP TABLE TMP_EVENT CASCADE CONSTRAINTS;
+DROP TABLE TMP_FAQ CASCADE CONSTRAINTS;
+DROP TABLE TMP_MEMBER CASCADE CONSTRAINTS;
+DROP TABLE TMP_MEMBER_INFO CASCADE CONSTRAINTS;
+DROP TABLE TMP_MOVIE CASCADE CONSTRAINTS;
+DROP TABLE TMP_MOVIE_INFO CASCADE CONSTRAINTS;
+DROP TABLE TMP_NON_MEMBER CASCADE CONSTRAINTS;
+DROP TABLE TMP_NOTICE CASCADE CONSTRAINTS;
+DROP TABLE TMP_QNA CASCADE CONSTRAINTS;
+DROP TABLE TMP_ROLE CASCADE CONSTRAINTS;
+DROP TABLE TMP_THEATER CASCADE CONSTRAINTS;
+DROP TABLE TMP_THEATER_FIRST CASCADE CONSTRAINTS;
+DROP TABLE TMP_TICKET CASCADE CONSTRAINTS;
+DROP TABLE TMP_USER CASCADE CONSTRAINTS;
+
+CREATE TABLE TMP_AUDIENCE -- 관객 평점 테이블
+(
+    AUDNO      NUMBER PRIMARY KEY,      -- 평론 기본키값
+    MID        NUMBER,                  -- 평론 대상 영화 기본키값
+    MEMNO      NUMBER,                  -- 평론하는 유저 기본키값
+    AUREVIEW  VARCAHR2(4000),                    -- 평론
+    AURATE    NUMBER,                  -- 평점 0~10점 만점
+    DELETE_YN   VARCHAR2(1) DEFAULT 'N', -- 소프트 딜리트 / 삭제 여부
+    INSERT_TIME VARCHAR2(255),           -- 컬럼 생성일
+    UPDATE_TIME VARCHAR2(255),           -- 컬럼 수정일
+    DELETE_TIME VARCHAR2(255)            -- 컬럼 삭제일
+);
+
+CREATE TABLE TMP_CINEMA_SITE -- 영화관 테이블
+(
+    CID           NUMBER PRIMARY KEY,      -- 상영관 기본키값
+    CINEMA_NAME   VARCHAR2(255) NOT NULL,  -- 상영관 이름
+    DELETE_YN     VARCHAR2(1) default 'N', -- 소프트 딜리트 / 삭제 여부
+    INSERT_TIME   VARCHAR2(255),           -- 컬럼 생성일
+    UPDATE_TIME   VARCHAR2(255),           -- 컬럼 수정일
+    DELETE_TIME   VARCHAR2(255)            -- 컬럼 삭제일
+);
+
+CREATE TABLE TMP_CRITICS -- 비평가 평점 테이블
+(
+    CRT_NO      NUMBER PRIMARY KEY,      -- 평론 기본키값
+    M_ID        NUMBER,                  -- 평론 대상 영화 기본키값
+    CRT_CRITICS CLOB,                    -- 평론
+    CRT_RATE    NUMBER,                  -- 평점 0~5점 만점
+    DELETE_YN   VARCHAR2(1) DEFAULT 'N', -- 소프트 딜리트 / 삭제 여부
+    INSERT_TIME VARCHAR2(255),           -- 컬럼 생성일
+    UPDATE_TIME VARCHAR2(255),           -- 컬럼 수정일
+    DELETE_TIME VARCHAR2(255)            -- 컬럼 삭제일
+);
+
+CREATE TABLE TMP_EVENT -- 이벤트 테이블
+(
+    EVT_NO             NUMBER PRIMARY KEY,      -- 평론 기본키값
+    EVT_TITLE          VARCHAR2(255),           -- 이벤트 제목
+    EVT_CONTENT        VARCHAR2(255),           -- 이벤트 내용 글
+    IMG_THUMB          BLOB,                    -- 이미지섬네일
+    IMG_THUMB_FILENAME VARCHAR2(1000),          --이미지 파일네임
+    IMG_THUMB_TYPE     VARCHAR2(30),            --이미지 확장자
+    IMG_MAIN           BLOB,                    --이미지 파일
+    IMG_MAIN_FILENAME  VARCHAR2(1000),          --이미지 파일네임
+    IMG_MAIN_TYPE      VARCHAR2(30),            --이미지 확장자
+    DELETE_YN          VARCHAR2(1) DEFAULT 'N', -- 소프트 딜리트 / 삭제 여부
+    INSERT_TIME        VARCHAR2(255),           -- 컬럼 생성일
+    UPDATE_TIME        VARCHAR2(255),           -- 컬럼 수정일
+    DELETE_TIME        VARCHAR2(255)            -- 컬럼 삭제일
+);
+
+CREATE TABLE TMP_FAQ
+(
+--   카멜/언더바 단축키 : alt + shift + u ( CamelCase 플러그인 설치 )
+--   대/소문자 단축키 : ctrl + shift + u
+    FID         NUMBER NOT NULL PRIMARY KEY,
+    SUBJECT     VARCHAR2(255),
+    TEXT        VARCHAR2(255),
+    WRITER      VARCHAR2(255),
+    DELETE_YN   VARCHAR2(1) DEFAULT 'N',
+    INSERT_TIME VARCHAR2(255),
+    UPDATE_TIME VARCHAR2(255),
+    DELETE_TIME VARCHAR2(255)
+);
+
+CREATE TABLE TMP_MEMBER
+(
+    MEM_NO        NUMBER PRIMARY KEY,      -- 멤버 기본키값(로그인 ID 아님!!)
+    MEM_ID        VARCHAR2(255) NOT NULL,  -- 로그인 ID
+    MEM_PW        VARCHAR2(500) NOT NULL,  -- 로그인 PW
+    MEM_NAME      VARCHAR2(255) NOT NULL,  -- 회원 이름
+    MEM_GENDER    VARCHAR2(1)   NOT NULL,  -- 회원 성별
+    MEM_PHONE     VARCHAR2(255) NOT NULL,  -- 회원 전화번호
+    MEM_EMAIL     VARCHAR2(255),           -- 회원 이메일
+    MEM_ADDRESS   VARCHAR2(1000),          -- 회원 주소
+    MEM_BIRTHDATE VARCHAR2(255) NOT NULL,  -- 회원 생년월일
+    DELETE_YN     VARCHAR2(1) DEFAULT 'N', -- 소프트 딜리트 / 삭제 여부
+    INSERT_TIME   VARCHAR2(255),           -- 컬럼 생성일
+    UPDATE_TIME   VARCHAR2(255),           -- 컬럼 수정일
+    DELETE_TIME   VARCHAR2(255)            -- 컬럼 삭제일
+);
+
+CREATE TABLE TMP_MEMBER_INFO -- 회원테이블에 쌓일 정보 저장하는 테이블
+(
+    MEM_NO      NUMBER PRIMARY KEY,      -- INFO 테이블 기본키값
+    MEM_WATCHED VARCHAR2(4000),                    -- 감상한 영화 목록
+    MEM_POINT   NUMBER,                  -- 포인트?
+    MEM_GRADE   VARCHAR2(255),           -- 회원등급?
+    DELETE_YN   VARCHAR2(1) DEFAULT 'N', -- 소프트 딜리트 / 삭제 여부
+    INSERT_TIME VARCHAR2(255),           -- 컬럼 생성일
+    UPDATE_TIME VARCHAR2(255),           -- 컬럼 수정일
+    DELETE_TIME VARCHAR2(255)            -- 컬럼 삭제일
+);
+
+
+CREATE TABLE TMP_MOVIE
+(
+    MID              NUMBER PRIMARY KEY,      -- 영화테이블 기본키
+    MTITLE           VARCHAR2(255) NOT NULL,  -- 영화 제목
+    MRUNNING_TIME    VARCHAR2(255),           -- 상영시간
+    MCODE            varchar2(255),           -- 국내/국외 + 영화장르 구분 코드
+    MRELEASE_DATE    VARCHAR2(255) NOT NULL,  -- 개봉일
+    MCLOSING_DATE    VARCHAR2(255),           -- 마감일
+    MDIRECTOR        VARCHAR2(255),           -- 감독
+    MACTOR           VARCHAR2(255),           -- 연기자
+    MSIMPLE_INFO     VARCHAR2(4000),          -- 줄거리, 짧은 설명
+    MTRAILER_LINK    VARCHAR2(4000),          -- 트레일러 링크
+    MAGE             VARCHAR2(30),            -- 이용 연령
+
+    MPOSTER          BLOB,                    -- 포스터 BLOB
+    MPOSTER_FILENAME VARCHAR2(1000),
+    MPOSTER_TYPE     VARCHAR2(1000),
+
+    MIMAGE1          BLOB,                    -- 스틸컷 이미지1~5
+    MIMAGE_FILENAME1 VARCHAR2(1000),
+    MIMAGE_TYPE1     VARCHAR2(1000),
+
+    MIMAGE2          BLOB,
+    MIMAGE_FILENAME2 VARCHAR2(1000),
+    MIMAGE_TYPE2     VARCHAR2(1000),
+
+    MIMAGE3          BLOB,
+    MIMAGE_FILENAME3 VARCHAR2(1000),
+    MIMAGE_TYPE3     VARCHAR2(1000),
+
+    MIMAGE4          BLOB,
+    MIMAGE_FILENAME4 VARCHAR2(1000),
+    MIMAGE_TYPE4     VARCHAR2(1000),
+
+    MIMAGE5          BLOB,
+    MIMAGE_FILENAME5 VARCHAR2(1000),
+    MIMAGE_TYPE5     VARCHAR2(1000),
+
+    DELETE_YN        VARCHAR2(1) DEFAULT 'N', -- 소프트 딜리트 / 삭제 여부
+    INSERT_TIME      VARCHAR2(255),           -- 컬럼 생성일
+    UPDATE_TIME      VARCHAR2(255),           -- 컬럼 수정일
+    DELETE_TIME      VARCHAR2(255)            -- 컬럼 삭제일
+);
+
+CREATE TABLE TMP_MOVIE_INFO -- 영화에 대한 평론,평점을 저장함
+(
+    MID                  NUMBER PRIMARY KEY,      -- 테이블 기본키 & 영화테이블과 연관됨
+    MCUMULATIVE_AUDIENCE NUMBER,                  -- 누적 관객수
+    MAUDIENCE_RATE       NUMBER,                  -- 관람객 평점 : 평점은 평론테이블의 모든 점수를 더하고 유저수로 나누어 냄
+    MCRITIC_RATE         NUMBER,                  -- 비평가 평점
+
+    DELETE_YN            VARCHAR2(1) DEFAULT 'N', -- 소프트 딜리트 / 삭제 여부
+    INSERT_TIME          VARCHAR2(255),           -- 컬럼 생성일
+    UPDATE_TIME          VARCHAR2(255),           -- 컬럼 수정일
+    DELETE_TIME          VARCHAR2(255)            -- 컬럼 삭제일
+);
+
+
+CREATE TABLE TMP_NOTICE -- 공지사항
+(
+    NTC_NO             NUMBER PRIMARY KEY,      -- 공지사항 기본키값
+    NTC_TITLE          VARCHAR2(255),           -- 공지사항 글
+    NTC_CONTENT        VARCHAR2(4000),          -- 공지사항 내용
+    NTC_IMAGE          BLOB,                    --공지사항 이미지
+    NTC_IMAGE_FILENAME VARCHAR2(1000),          --공지사항 이미지 파일네임
+    NTC_IMAGE_TYPE     VARCHAR2(50),            --공지사항 이미지 확장자명
+    DELETE_YN          VARCHAR2(1) DEFAULT 'N', -- 소프트 딜리트 / 삭제 여부
+    INSERT_TIME        VARCHAR2(255),           -- 컬럼 생성일
+    UPDATE_TIME        VARCHAR2(255),           -- 컬럼 수정일
+    DELETE_TIME        VARCHAR2(255)            -- 컬럼 삭제일
+);
+
+CREATE TABLE TMP_QNA
+(
+--   카멜/언더바 단축키 : alt + shift + u ( CamelCase 플러그인 설치 )
+--   대/소문자 단축키 : ctrl + shift + u
+    QID         NUMBER NOT NULL PRIMARY KEY,
+    SUBJECT     VARCHAR2(255),
+    TEXT        VARCHAR2(255),
+    WRITER      VARCHAR2(255),
+    DELETE_YN   VARCHAR2(1) DEFAULT 'N',
+    INSERT_TIME VARCHAR2(255),
+    UPDATE_TIME VARCHAR2(255),
+    DELETE_TIME VARCHAR2(255)
+);
+
+CREATE TABLE TMP_ROLE
+(
+    RID         NUMBER NOT NULL PRIMARY KEY,
+    NAME        VARCHAR2(255),
+    DELETE_YN   VARCHAR2(1) DEFAULT 'N',
+    INSERT_TIME VARCHAR2(255),
+    UPDATE_TIME VARCHAR2(255),
+    DELETE_TIME VARCHAR2(255)
+);
+
+CREATE TABLE TMP_SCHEDULE --영화 일정 테이블
+(
+ SCID	 	NUMBER PRIMARY KEY,  -- 일정 기본키
+ THID		NUMBER,			-- 상영관 넘버
+ MTITLE 	VARCHAR2(255),		-- 영화제목
+ MAGE	VARCHAR2(30),		-- 영화 연령제한
+ THDATE	VARCHAR2(30),		-- 영화 상영일
+ THTIME	VARCHAR2(255),		-- 영화 상영시간
+ SEAT_A	VARCHAR2(255),		-- 좌석
+ SEAT_B	VARCHAR2(255),
+ SEAT_C	VARCHAR2(255),
+ SEAT_D	VARCHAR2(255),
+ SEAT_E	VARCHAR2(255),
+ SEAT_F	VARCHAR2(255),
+ SEAT_G	VARCHAR2(255),
+ SEAT_H	VARCHAR2(255),
+ SEAT_I	VARCHAR2(255),
+ SEAT_J	VARCHAR2(255),
+ SEAT_K	VARCHAR2(255),
+ SEAT_L	VARCHAR2(255),
+ SEAT_M	VARCHAR2(255),
+ SEAT_N	VARCHAR2(255),
+ SEAT_O	VARCHAR2(255),
+ SEAT_P	VARCHAR2(255),
+    DELETE_YN    VARCHAR2(1) default 'N', -- 소프트 딜리트 / 삭제 여부
+    INSERT_TIME  VARCHAR2(255),           -- 컬럼 생성일
+    UPDATE_TIME  VARCHAR2(255),           -- 컬럼 수정일
+    DELETE_TIME  VARCHAR2(255)            -- 컬럼 삭제일
+)
+CREATE TABLE TMP_THEATER -- 상영관 테이블
+(
+    THID          	NUMBER PRIMARY KEY,      -- 상영관 기본키값
+    CID       		NUMBER NOT NULL,  -- 상영관 이름
+    THNAME 		VARCHAR2(255) NOT NULL,  -- 상영관 시작 시간
+    THTYPE  		VARCHAR2(20) NOT NULL,  -- 상영관 종료 시간
+    DELETE_YN    VARCHAR2(1) default 'N', -- 소프트 딜리트 / 삭제 여부
+    INSERT_TIME  VARCHAR2(255),           -- 컬럼 생성일
+    UPDATE_TIME  VARCHAR2(255),           -- 컬럼 수정일
+    DELETE_TIME  VARCHAR2(255)            -- 컬럼 삭제일
+);
+
+CREATE TABLE TMP_THEATER_FIRST -- 상영관 테이블(임시로 한 상영관만 존재 중 )
+(
+    T_ID         NUMBER PRIMARY KEY,      -- 상영관 기본키값
+    T_NAME       VARCHAR2(255) NOT NULL,  -- 상영관 이름
+    T_START_TIME VARCHAR2(255) NOT NULL,  -- 상영관 시작 시간
+    T_END_TIME   VARCHAR2(500) NOT NULL,  -- 상영관 종료 시간
+    SEAT_A       VARCHAR2(255),
+    SEAT_B       VARCHAR2(255),
+    SEAT_C       VARCHAR2(255),
+    SEAT_D       VARCHAR2(255),
+    SEAT_E       VARCHAR2(255),
+    SEAT_F       VARCHAR2(255),
+    SEAT_G       VARCHAR2(255),
+    SEAT_H       VARCHAR2(255),
+    SEAT_I       VARCHAR2(255),
+    SEAT_J       VARCHAR2(255),
+    SEAT_K       VARCHAR2(255),
+    SEAT_L       VARCHAR2(255),
+    SEAT_M       VARCHAR2(255),
+    SEAT_N       VARCHAR2(255),
+    SEAT_O       VARCHAR2(255),
+    SEAT_P       VARCHAR2(255),
+    DELETE_YN    VARCHAR2(1) default 'N', -- 소프트 딜리트 / 삭제 여부
+    INSERT_TIME  VARCHAR2(255),           -- 컬럼 생성일
+    UPDATE_TIME  VARCHAR2(255),           -- 컬럼 수정일
+    DELETE_TIME  VARCHAR2(255)            -- 컬럼 삭제일
+);
+
+CREATE TABLE TMP_TICKET -- 티켓  테이블
+(
+    TK_ID         NUMBER PRIMARY KEY,      -- 티켓 기본키값
+    TK_TITLE      VARCHAR2(255) NOT NULL,  -- 영화 제목
+    TK_THEATER    VARCHAR2(255) NOT NULL,  -- 상영관
+    TK_PRICE      NUMBER,                  -- 티켓가격
+    TK_SEAT       VARCHAR2(255),           -- 좌석번호
+    TK_START_TIME VARCHAR2(255),           -- 영화 시작 시간
+    TK_END_TIME   VARCHAR2(255),           -- 영화 끝 시간
+    TK_MEM_YN     VARCHAR2(1),             -- 멤버여부
+    TK_MEM_ID     VARCHAR2(255),           -- 멤버/논멤버 아이디
+    TK_PHONE     VARCHAR2(30),             -- 비회원만 기입 - 휴대폰 번호
+    TK_PW	     VARCHAR2(255),            -- 비회원만 기입 - 비회원 예매 번호
+    DELETE_YN     VARCHAR2(1) default 'N', -- 소프트 딜리트 / 삭제 여부
+    INSERT_TIME   VARCHAR2(255),           -- 컬럼 생성일
+    UPDATE_TIME   VARCHAR2(255),           -- 컬럼 수정일
+    DELETE_TIME   VARCHAR2(255)            -- 컬럼 삭제일
+);
+
+create table TMP_USER -- 유저 테이블
+(
+    ID          NUMBER not null primary key, --유저 기본키
+    USERNAME    VARCHAR2(1000),              --유저 이름
+    PASSWORD    VARCHAR2(1000),              --유저 패스워드
+    EMAIL       VARCHAR2(1000),              --유저 이메일
+    DELETE_YN   VARCHAR2(1) default 'N',     -- 소프트 딜리트 / 삭제 여부
+    INSERT_TIME VARCHAR2(255),               -- 컬럼 생성일
+    UPDATE_TIME VARCHAR2(255),               -- 컬럼 수정일
+    DELETE_TIME VARCHAR2(255)                -- 컬럼 삭제일
+);
+
+PURGE RECYCLEBIN;
+
+COMMIT;

@@ -1,0 +1,8 @@
+xe_high = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=g3ad69d80b73f37_xe_high.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.ap-chuncheon-1.oraclecloud.com, OU=Oracle ADB CHUNCHEON, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))
+
+xe_low = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=g3ad69d80b73f37_xe_low.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.ap-chuncheon-1.oraclecloud.com, OU=Oracle ADB CHUNCHEON, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))
+
+xe_medium = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-chuncheon-1.oraclecloud.com))(connect_data=(service_name=g3ad69d80b73f37_xe_medium.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.ap-chuncheon-1.oraclecloud.com, OU=Oracle ADB CHUNCHEON, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))
+
+
+
